@@ -28,7 +28,14 @@ export default function VerifyPageClient() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gray-100">
       <div className="bg-white shadow-xl p-8 rounded-xl w-full max-w-2xl">
-        <h1 className="text-xl font-bold mb-6 text-center">🔍 Select Your Business</h1>
+
+        {/* Step Indicator */}
+        <div className="text-sm text-center mb-4 text-gray-600">
+          Step 2 of 4: Verify Your Business
+        </div>
+
+        <h1 className="text-xl font-bold mb-6 text-center">🔍 Is This Your Business?</h1>
+
         <ul className="space-y-4">
           {filteredBusinesses.map((biz, idx) => (
             <li
@@ -38,18 +45,32 @@ export default function VerifyPageClient() {
                 selectedIndex === idx ? 'border-blue-500 bg-blue-50' : 'hover:bg-gray-50'
               }`}
             >
+              {/* Business Image Placeholder */}
+              <div className="w-full h-32 bg-gray-200 rounded mb-2 flex items-center justify-center text-gray-500">
+                Business Image
+              </div>
+
               <p className="font-semibold">{biz.name}</p>
               <p className="text-sm text-gray-600">{biz.phone} · {biz.address}</p>
             </li>
           ))}
         </ul>
+
         <button
           disabled={selectedIndex === null}
           onClick={handleContinue}
           className="mt-6 w-full bg-blue-600 text-white py-2 rounded-md disabled:opacity-50"
         >
-          ✅ Confirm & Continue
+          ✅ Yes, This Is Me
         </button>
+
+        <button
+          onClick={() => router.push('/')}
+          className="mt-3 w-full text-sm text-blue-600 hover:underline"
+        >
+          ↩️ No, Try Again
+        </button>
+
       </div>
     </div>
   );
