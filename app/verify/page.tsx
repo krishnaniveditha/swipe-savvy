@@ -1,5 +1,10 @@
+import { Suspense } from 'react';
 import VerifyPageClient from './VerifyPageClient';
 
 export default function VerifyPage() {
-  return <VerifyPageClient />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyPageClient />
+    </Suspense>
+  );
 }
