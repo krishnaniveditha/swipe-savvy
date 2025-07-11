@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/generated/prisma'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library' 
 
 const prisma = new PrismaClient();
 
@@ -49,7 +50,17 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error('❌ Error saving account:', error.message || error);
-
+      
+        // ✅ Handle Prisma unique constraint error
+        if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002') {
+          return NextResponse.json(
+            {
+              success: false,
+              error: 'An account with this email already exists.',
+            },
+            { status: 400 }
+          )
+        }
     return NextResponse.json(
       {
         success: false,

@@ -37,11 +37,11 @@ export default function AccountPage() {
 
       const data = await res.json()
 
-      if (data.success) {
+      if (res.ok && data.success) {
         // Redirect to /terms if account is saved successfully
         window.location.href = '/terms'
       } else {
-        alert('Something went wrong. Please try again.')
+        alert(data.error || 'Something went wrong. Please try again.')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
